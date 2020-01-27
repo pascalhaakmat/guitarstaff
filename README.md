@@ -1,5 +1,9 @@
 # Guitarstaff
 
+A basic tool to correlate notes on the musical staff with the guitar neck.
+
+[Live demo](https://pascalhaakmat.github.io/guitarstaff/index.html)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.2.
 
 ## Development server
