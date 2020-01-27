@@ -1,20 +1,42 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="outer">
+  <div class="fret-container">
+    <div class="fret" [ngStyle]="{'height': fretHeight(0) + '%', 'font-size': fretHeight(0) + '%'}">
+    <div *ngFor="let string of strings; let stringIndex = index" class="string-container"  [ngClass]="{'highlight': string == staffNote || fretStringNote == string}">
+      <div class="note-container">
+        <div class="string"></div>
+        <div class="note" [ngStyle]="{'font-size': fretHeight(0) + '%'}">{{ string }}</div>
+      </div>
+      <div class="string"></div>
+      </div>
+    </div>
+    <ng-container *ngFor="let fret of frets; let fretIndex = index">
+      <div class="fret" [ngStyle]="{'height': fretHeight(fretIndex) + '%', 'font-size': fretHeight(fretIndex) + '%'}">
+        
+        <div *ngFor="let string of strings; let stringIndex = index" class="string-container"  [ngClass]="{'mark': fret.mark, 'highlight': getNoteForFretString(fretIndex, stringIndex) == staffNote || fretStringNote == getNoteForFretString(fretIndex, stringIndex)}" (mouseover)="onMouseOverString(fretIndex, stringIndex)">
+          <div class="note-container">
+            <div class="string"></div>
 
+            <div class="note" [ngStyle]="{'font-size': fretHeight(fretIndex) + '%'}">{{ getNoteForFretString(fretIndex, stringIndex) }}</div>
+          </div>
+          <div class="string"></div>
+          
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="staff-container">
+    <div *ngFor="let line of staffLines; let i = index; let odd = odd; let even = even" class="staff-line" [ngClass]="{'odd': odd, 'even': even, 'highlight': staffNote === line || fretStringNote === line}" (mouseover)="onMouseOverStaff(i)">
+      <div class="note-wrapper">
+        <div [ngClass]="{'staff-line-long': isLedgerLong(i)}"></div>
+        <div [ngClass]="{'staff-line-long': isLedgerLong(i), 'staff-line-short': isLedgerShort(i)}"></div>
+        <div class="note-container">
+          <div class="note">{{ line }}</div>
+        </div>
+        <div [ngClass]="{'staff-line-long': isLedgerLong(i), 'staff-line-short': isLedgerShort(i)}"></div>
+        <div [ngClass]="{'staff-line-long': isLedgerLong(i)}"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
